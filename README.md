@@ -1,1 +1,1 @@
-Fwuan. Rhymes with "you on?", but said quickly..
+Fwuan. Rhymes with "you on?", but said quickly.
