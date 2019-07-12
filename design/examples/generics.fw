@@ -1,0 +1,34 @@
+// The following is in broken C#
+
+public class ShouldCreateSpec : Specification<Item>
+{
+    public static readonly ShouldCreateSpec Instance = new ShouldCreateSpec();
+
+    private ShouldCreateSpec() {}
+
+    public override bool IsSatisfiedBy(Item item)
+    {
+        return agreement.Product.IsCreditBased 
+               && agreement.ProductType != ProductType.SaasPaymentSchedule;
+    }
+    
+    // Collision on static and instance methods in C#
+    // Should either allow this (probably not?) or allow static methods to be considered instance methods as well
+    public static bool IsSatisfiedBy(Item item) => Instance.IsSatisfiedBy(item);
+}
+
+public Test 
+{
+    public void Main()
+    {
+        Item i = new Item();
+             
+        // Should be able to do this
+        if (i.IsSatisfiedBy<ShouldCreateSpec>())
+            Log("It satisfies");
+            
+        // Instead, C# would be something like
+        if (i.IsSatisfiedBy<Specification<Item>, Item>())
+            ;
+    }
+}
