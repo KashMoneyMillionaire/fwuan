@@ -1,0 +1,14 @@
+// The description of the type
+
+public class Type
+{
+    public List<ConditionalGuard> ConditionalGuards;
+    
+}
+
+public class ConditionalGuard
+{
+    private string _variableName;
+    private Expression<T, bool> _condition;
+    private guard _guard;
+}
