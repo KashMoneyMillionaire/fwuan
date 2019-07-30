@@ -1,0 +1,14 @@
+range
+restriction
+case
+regex
+public
+private
+class
+void
+number
+string
+let
+const
+var
+static
