@@ -12,3 +12,4 @@ let
 const
 var
 static
+atom
