@@ -1,6 +1,6 @@
 public class SwitchRangeExample
 {
-    public string Number(Number num)
+    public string NumberToString(number num)
     {
         // TODO how to handle inclusive/exclusive?
         // Default to range behavior?
@@ -19,5 +19,24 @@ public class SwitchRangeExample
             default:
                 return "Too many to count";
         }
+    }
+    
+    public string String(string str)
+    {
+        switch (num)
+        {
+            case null:
+                return "Null";
+            case "":
+                return "Empty";
+            expression value.StartsWith("A"):
+                return "Starts with A";
+            regex /^[0-9]/:
+                return "Starts with a number";
+            regex /.$/:
+                return "Must be a sentence, it ends with a period";
+            default:
+                return "Who knows what's going on here";
+        }   
     }
 }
