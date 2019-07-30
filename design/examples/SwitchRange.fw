@@ -1,6 +1,6 @@
 public class SwitchRangeExample
 {
-    public string NumberToString(number num)
+    public string IntToString(int num)
     {
         // TODO how to handle inclusive/exclusive?
         // Default to range behavior?
@@ -12,9 +12,9 @@ public class SwitchRangeExample
                 return "One";
             case 2:
                 return "A couple";
-            range (2..5]:
+            range [3..5]:
                 return "A few";
-            range (6..100]:
+            range [6..100): // doesn't include 100. Same as [6..99]
                 return "A lot";
             default:
                 return "Too many to count";
