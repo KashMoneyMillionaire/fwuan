@@ -45,9 +45,9 @@ namespace Fwuan.Compiler
         Number,
         
         // Keywords
-        And, Or, Else, True, False, Not,
+        And, Or, Else, True, False, Not, If,
         Class, Function, For, While, Return,
-        Null, Super, Base, Var, Print,
+        Null, Super, Base, This, Var, Print,
         
         // Visibility Modifiers
 //        Public, Private, Restricted,
