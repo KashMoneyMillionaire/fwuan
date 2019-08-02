@@ -39,4 +39,27 @@ public class SwitchRangeExample
                 return "Who knows what's going on here";
         }   
     }
+
+    public string EnumToString(ExampleEnum e)
+    {
+        // Since enums cannot hold values outside their decalred values,
+        // the cases are simple
+        switch (e)
+        {
+            case ExampleEnum.None:
+                return "None";
+            case ExampleEnum.One:
+                return "Only one";
+            cases { ExampleEnum.SoMany, ExampleEnum.AllOfThem }:
+                return "The rest";
+        }
+    }
+}
+
+public enum ExampleEnum
+{
+    None,
+    One,
+    SoMany,
+    AllOfThem
 }
