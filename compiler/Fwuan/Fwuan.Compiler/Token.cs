@@ -1,24 +1,23 @@
-using System;
-
 namespace Fwuan.Compiler
 {
     internal class Token
     {
-        private readonly string _lexeme;
-        private readonly int    _line;
+        private readonly int _line;
+
+        public string Lexeme { get; }
 
         public object    Literal { get; }
-        public  TokenType Type    { get; }
+        public TokenType Type    { get; }
 
         public Token(TokenType type, string lexeme, object literal, int line)
         {
             Type = type;
-            _lexeme = lexeme;
+            Lexeme = lexeme;
             Literal = literal;
             _line = line;
         }
 
-        public override string ToString() => $"{Type} {_lexeme} {Literal}";
+        public override string ToString() => $"{Type} {Lexeme} {Literal}";
     }
 
     public enum TokenType

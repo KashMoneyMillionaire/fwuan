@@ -8,11 +8,23 @@ namespace Fwuan.Compiler.Syntax
     {
         private readonly Queue<Token> _tokens;
 
-        private bool IsAtEnd => _tokens.Any() && _tokens.Peek().Type == TokenType.EndOfFile;
+        private bool IsAtEnd => !_tokens.Any();
 
         public Parser(IEnumerable<Token> tokens)
         {
             _tokens = new Queue<Token>(tokens);
+        }
+
+        public Expr Parse()
+        {
+            try
+            {
+                return Expression();
+            }
+            catch (ParseException)
+            {
+                return null;
+            }
         }
 
         private Expr Expression() => Equality();
@@ -63,7 +75,7 @@ namespace Fwuan.Compiler.Syntax
         {
             Expr left = Unary();
 
-            while (NextIsOneOf(TokenType.Minus, TokenType.Plus))
+            while (NextIsOneOf(TokenType.Asterisk, TokenType.Slash))
             {
                 Token op = _tokens.Dequeue();
                 Expr right = Unary();
@@ -96,7 +108,7 @@ namespace Fwuan.Compiler.Syntax
                 Consume(TokenType.RightParentheses, "Expect ')' after expression.");
                 return new Expr.Grouping(expr);
             }
-            
+
             throw new Exception("Don't know how to handle this part 🤷‍");
         }
 
@@ -109,8 +121,35 @@ namespace Fwuan.Compiler.Syntax
             return _tokens.Dequeue();
         }
 
+        private void Synchronize()
+        {
+            Token current = _tokens.Dequeue();
+
+            while (!IsAtEnd)
+            {
+                if (current.Type == TokenType.Semicolon)
+                    return;
+
+                Token next = _tokens.Peek();
+                switch (next.Type)
+                {
+                    case TokenType.Class:
+                    case TokenType.Function:
+                    case TokenType.Var:
+                    case TokenType.For:
+                    case TokenType.If:
+                    case TokenType.While:
+                    case TokenType.Print:
+                    case TokenType.Return:
+                        return;
+                }
+
+                current = _tokens.Dequeue();
+            }
+        }
+
         private bool NextIsOneOf(params TokenType[] tokenTypes) => tokenTypes.Any(Check);
 
-        private bool Check(TokenType type) => IsAtEnd && _tokens.Peek().Type == type;
+        private bool Check(TokenType type) => !IsAtEnd && _tokens.Peek().Type == type;
     }
 }

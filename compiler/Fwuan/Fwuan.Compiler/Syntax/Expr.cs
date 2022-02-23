@@ -4,47 +4,48 @@ namespace Fwuan.Compiler.Syntax
     {
         public class Binary : Expr
         {
-            private Expr  _left;
-            private Token _op;
-            private Expr  _right;
+            public Expr  Left  { get; }
+            public Expr  Right { get; }
+            public Token Op    { get; }
 
             public Binary(Expr left, Token op, Expr right)
             {
-                _left = left;
-                _op = op;
-                _right = right;
+                Left = left;
+                Op = op;
+                Right = right;
             }
         }
 
         public class Unary : Expr
         {
-            private Token _op;
-            private Expr  _right;
+            public Token Op    { get; }
+            public Expr  Right { get; }
+
 
             public Unary(Token op, Expr right)
             {
-                _op = op;
-                _right = right;
+                Op = op;
+                Right = right;
             }
         }
 
         public class Literal : Expr
         {
-            private readonly object _obj;
+            public object Value { get; }
 
-            public Literal(object obj)
+            public Literal(object value)
             {
-                _obj = obj;
+                Value = value;
             }
         }
 
         public class Grouping : Expr
         {
-            private readonly Expr _expression;
+            public Expr Expression { get; }
 
             public Grouping(Expr expression)
             {
-                _expression = expression;
+                Expression = expression;
             }
         }
     }

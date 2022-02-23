@@ -9,20 +9,12 @@ namespace Fwuan.Compiler.TokenReaders
             if (!char.IsDigit(sequence[0]))
                 return HandleWithSuccessor(sequence, line);
 
-            int endOfNumberIndex = 1;
-            while (char.IsDigit(sequence[endOfNumberIndex])) 
-                endOfNumberIndex++;
-
-            if (sequence[endOfNumberIndex] == '.')
-            {
-                if (sequence.Length > endOfNumberIndex && char.IsDigit(sequence[endOfNumberIndex]))
-                    endOfNumberIndex++;
-
-                while (char.IsDigit(sequence[endOfNumberIndex])) 
-                    endOfNumberIndex++;
-            }
+            int endOfNumberIndex = sequence.Contains(" ", StringComparison.OrdinalIgnoreCase)
+                                       ? sequence.IndexOf(" ")
+                                       : sequence.Length;
 
             string lexeme = sequence.ToString(0, endOfNumberIndex);
+
             return new TokenReadResult
                    {
                        Token = new Token(TokenType.Number, lexeme, double.Parse(lexeme), line),

@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Fwuan.Compiler.Syntax;
 
 namespace Fwuan.Compiler
 {
     public class Fwuan
     {
+        private static readonly AtsPrinter _printer = new AtsPrinter();
+        private static readonly Interpreter _interpreter;
+
         static void Main(string[] args)
         {
             if (args.Length > 1)
@@ -44,28 +48,26 @@ namespace Fwuan.Compiler
         private static bool Run(string text)
         {
             Tokenizer t = new Tokenizer(text);
-            (List<Token> tokens, List<Error> errors, List<Warning> warnings) = t.GetTokens();
+            (List<Token> tokens, List<Error> errors) = t.GetTokens();
 
             if (errors.Any())
             {
-                foreach (Error error in errors) 
+                foreach (Error error in errors)
                     Console.WriteLine(error.Report());
 
                 return true;
             }
 
-            foreach (Warning warning in warnings) 
-                Console.WriteLine(warning);
-            
-            foreach (Token token in tokens) 
-                Console.WriteLine(token);
+            tokens.ForEach(Console.WriteLine);
+
+            Parser parser = new Parser(tokens);
+            Expr expr = parser.Parse();
+
+            _printer.Print(expr);
+            _interpreter.Interpret(expr);
 
             return false;
         }
-    }
-
-    internal class Warning
-    {
     }
 
     internal class Error
